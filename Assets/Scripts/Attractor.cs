@@ -5,7 +5,7 @@ using UnityEngine;
 public class Attractor : MonoBehaviour {
 
     public Rigidbody rb;
-    float G = 8 * Mathf.Log(6.674f);
+    public float G = 8 *6.674f;
 
     public static List<Attractor> Attractors;
 

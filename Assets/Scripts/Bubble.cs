@@ -48,9 +48,7 @@ public class Bubble : MonoBehaviour {
         Collider[] nearby = Physics.OverlapSphere(transform.position, particleRad);
         foreach (Collider nearbyObject in nearby)
         {
-            if(nearbyObject.CompareTag("Player")) { 
-                
-            }
+            //apply forces on all nearby objects
         }
         Destroy(this.gameObject);
         //find an efficient way to remove the attractor from the array of attractors   
