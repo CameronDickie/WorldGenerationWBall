@@ -8,6 +8,8 @@ public class ParticleLauncher : MonoBehaviour {
     public ParticleSystem collisionParticle;
     public GameObject player;
     List<ParticleCollisionEvent> collisionEvents;
+    Vector3 dir;
+    public float forceMag;
     
     // Use this for initialization
     void Start () {
