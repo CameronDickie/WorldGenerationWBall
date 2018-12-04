@@ -63,7 +63,7 @@ public class ParticleLauncher : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-       particleLauncher.Emit(1); //emits 1 particle every frame
+        particleLauncher.Emit(1); //emits 1 particle every frame **CHANGE 
         CalcForce();
 	}
 }
