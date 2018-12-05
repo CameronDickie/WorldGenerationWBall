@@ -14,15 +14,19 @@ public class MeshGenerator : MonoBehaviour {
 
     Vector3[] vertices;
     int[] triangles;
+    MeshCollider collider;
 
     public int xSize = 32;
     public int zSize = 32;
+    public float hillHeight;
     
 	// Use this for initialization
 	void Start () {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         CreateShape();
+
+        collider = GetComponent<MeshCollider>();
 	}
     private void Update()
     {
@@ -39,7 +43,8 @@ public class MeshGenerator : MonoBehaviour {
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float y = Mathf.PerlinNoise(x * .3f, z * .3f) * 2f;
+                float y = Mathf.Sin(x);
+                //float y = Mathf.PerlinNoise(x * .3f, z * .3f) * hillHeight;
                 vertices[i] = new Vector3(x, y, z);
                 i++;
             }
@@ -123,6 +128,10 @@ public class MeshGenerator : MonoBehaviour {
         mesh.Clear();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        if(collider.sharedMesh == null || collider.sharedMesh != mesh)
+        {
+            collider.sharedMesh = mesh;
+        }
 
         mesh.RecalculateNormals();
     }
