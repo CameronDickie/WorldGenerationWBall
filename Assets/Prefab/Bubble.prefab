@@ -62,15 +62,15 @@ GameObject:
   - component: {fileID: 23551672400852712}
   - component: {fileID: 135099088739939266}
   - component: {fileID: 54681624312681000}
-  - component: {fileID: 114146397513078012}
   - component: {fileID: 114272889099587632}
+  - component: {fileID: 114414213768665688}
   m_Layer: 9
   m_Name: Bubble
   m_TagString: Bubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4247712504036250
 Transform:
   m_ObjectHideFlags: 1
@@ -90,15 +90,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979879935734414}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.31, y: 5.2, z: 4.84}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.93, y: -0.95, z: 19.51}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 4672209208804688}
   - {fileID: 4247712504036250}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &4672209208804688
 Transform:
   m_ObjectHideFlags: 1
@@ -226,18 +226,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114146397513078012
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1979879935734414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16ed368989f3e994fb517a10be02a85d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 54681624312681000}
 --- !u!114 &114236358754876694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -249,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eab3d915f505314896b786646e0f227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primary: {fileID: 0}
+  primary: {fileID: 1979879935734414}
 --- !u!114 &114272889099587632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -262,6 +250,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleRad: 0
+--- !u!114 &114414213768665688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1979879935734414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ed368989f3e994fb517a10be02a85d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 54681624312681000}
+  G: 53.392
 --- !u!114 &114415119746513516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -274,6 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 54001522079537542}
+  G: 53.392
 --- !u!114 &114429946781483496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,6 +288,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleLauncher: {fileID: 198287490024240708}
+  collisionParticle: {fileID: 0}
+  player: {fileID: 0}
+  forceMag: 0
 --- !u!135 &135099088739939266
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -494,13 +499,13 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       minColor: {r: 1, g: 1, b: 1, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 0.9254902, g: 0.11372549, b: 0.6745098, a: 1}
+        key1: {r: 0.67058825, g: 0.09019608, b: 0.92156863, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -528,8 +533,8 @@ ParticleSystem:
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 0.5176471, g: 0.92941177, b: 0.25490198, a: 1}
+        key1: {r: 0.99607843, g: 0.7254902, b: 0.003921569, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1078,7 +1083,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -2340,7 +2345,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   ForceModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -3710,7 +3715,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 3
     type: 1
     collisionMode: 0
@@ -3892,7 +3897,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -4859,7 +4864,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3e5be595812e7374982abf7414571ab2, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
