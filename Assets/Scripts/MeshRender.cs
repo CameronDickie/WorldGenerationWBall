@@ -6,9 +6,14 @@ public class MeshRender : MonoBehaviour {
 
     public int chunksToRender;
     public int chunkSize;
-    
-    List<Mesh> meshs;
+    [Range(0, 10)]
+    public float roughness;
+    public Material chunkMat;
     public List<GameObject> world;
+
+    List<Mesh> meshs;
+
+
     //HOW I HANDLE CHUNK GENERATION
     /*
      * First, generate the list of mesh's using RenderChunk(size) that are going to be used for the terrain
@@ -25,10 +30,17 @@ public class MeshRender : MonoBehaviour {
     void Start () {
         world = SpawnChunks(chunksToRender);
 	}
-	
+    private void Update()
+    {
+        meshs = UpdateMesh(meshs);
+    }
+    public List<Mesh> UpdateMesh(List<Mesh> chunks)
+    {
+        //here go any changes made to the meshes that happen every frame
+        return chunks;
+    }
     public List<GameObject> SpawnChunks(int numOfChunks)
     {
-        Debug.Log("ran");
         List<GameObject> chunks = new List<GameObject>();
         meshs = GenerateSpawnMesh(chunksToRender);
         for (int i = 0; i < meshs.Count; i++)
@@ -38,14 +50,15 @@ public class MeshRender : MonoBehaviour {
             curChunk.AddComponent(typeof(MeshFilter));
             curChunk.GetComponent<MeshFilter>().mesh = meshs[i];
             curChunk.AddComponent(typeof(MeshRenderer));
-            //here is where you should determine the material of the Renderer
+            curChunk.GetComponent<MeshRenderer>().material = chunkMat;
+            //texture rendering done here
             curChunk.AddComponent(typeof(MeshCollider));
             curChunk.GetComponent<MeshCollider>().sharedMesh = meshs[i];
             curChunk.GetComponent<MeshCollider>().convex = true;
             curChunk.AddComponent(typeof(Rigidbody));
             Rigidbody rb = curChunk.GetComponent<Rigidbody>();
             rb.isKinematic = false;
-            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             rb.useGravity = false;
             curChunk.GetComponent<Rigidbody>().Equals(rb);
 
@@ -58,6 +71,7 @@ public class MeshRender : MonoBehaviour {
         }
         return chunks;
     }
+   
     private List<Mesh> GenerateSpawnMesh(int len)
     {
         List<Mesh> sp = new List<Mesh>();
@@ -68,7 +82,8 @@ public class MeshRender : MonoBehaviour {
         }
         return sp;
     }
-    private Mesh RenderChunk(int Size)
+
+    public Mesh RenderChunk(int Size)
     {
         Mesh m = new Mesh();
         Vector3[] v = new Vector3[(Size + 1) * (Size + 1)]; //local vertices array
@@ -78,7 +93,7 @@ public class MeshRender : MonoBehaviour {
             for (int x = 0; x <= Size; x++)
             {
                 //calculate height
-                float y = Mathf.PerlinNoise(x * .3f, z * .3f) * 2f;
+                float y = Mathf.PerlinNoise(x * .3f, z * .3f) * roughness;
                 v[i] = new Vector3(x, y, z);
                 i++;
             }
@@ -103,21 +118,44 @@ public class MeshRender : MonoBehaviour {
             }
             vert++;
         }
-        //push these to the mesh
+
+        
+
+        //push these to the mesh *every frame*
         m.vertices = v;
         m.triangles = t;
+        m.uv = makeUV(v.Length, Size);        
         return m;
     }
-    private List<Mesh> RenderSpawnMesh()
+
+    public Vector2[] makeUV(int verticesLen, int AxisSize)
+    {
+        Vector2[] uvs = new Vector2[verticesLen];
+
+        for (int z = 0, i = 0; z <= AxisSize; z++)
+        {
+            for (int x = 0; x <= AxisSize; x++)
+            {
+                uvs[i] = new Vector2((float)(x/AxisSize), (float)(z/AxisSize));
+                i++;
+            }
+        }
+        for (int i = 0; i < verticesLen; i++)
+        {
+           // Gizmos.DrawLine(new Vector3(uvs[i].x, uvs[i].y, 0), );
+        }
+        return uvs;
+    }
+
+    public List<Mesh> RenderMesh(int chunksToRender)
     {
         
         List<Mesh> spawn = new List<Mesh>();
-        int chunksToRender = 2;
         for (int i = 0; i < chunksToRender; i++)
         {
             Mesh chunk = RenderChunk(chunkSize);
             spawn.Add(chunk);
         }
-        return null;
+        return spawn;
     }
 }
